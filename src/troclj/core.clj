@@ -74,9 +74,14 @@
 (defn price-belief [agent commodityId]
   (get-in agent [:price-beliefs commodityId] [0.5 1.5]))    ; todo initial price belief...
 
+(defn agent-commodity-amount [agent commodityId]
+  (get-in agent [:inventory :content commodityId] 0))
+
+(defn update-agent-stock [agent commodityId amount]
+  (update-in agent [:inventory :content commodityId] (fnil + 0) amount))
+
 (defn agent-has? [agent commodityId amount]
-  (let [actual (get-in agent [:inventory :content commodityId] 0)]
-    (<= amount actual)))
+  (<= amount (agent-commodity-amount agent commodityId)))
 
 (defn agent-has-not? [agent commodityId amount]
   (not (agent-has? agent commodityId amount)))
