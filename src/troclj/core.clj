@@ -68,24 +68,39 @@
    :observed-trading-range {}
    :production             production-fn})
 
-(defn inventory-of [agent]
+(defn inventory-of
+  "Return the inventory of the 'agent' provided"
+  [agent]
   (:inventory agent))
 
-(defn price-belief [agent commodityId]
+(defn price-belief
+  "Return the price belief of the 'agent' for the specified commodity.
+   If none is defined yet, generate a random one."
+  [agent commodityId]
   (get-in agent [:price-beliefs commodityId] [0.5 1.5]))    ; todo initial price belief...
 
-(defn agent-commodity-amount [agent commodityId]
+(defn agent-commodity-amount
+  "Return the quantity of the specified commodity the 'agent' currently owns"
+  [agent commodityId]
   (get-in agent [:inventory :content commodityId] 0))
 
-(defn update-agent-stock [agent commodityId amount]
+(defn update-agent-stock
+  "Update the quantity of the specified commodity with the provided 'amount',
+   Return an updated version of the provided 'agent'."
+  [agent commodityId amount]
   (update-in agent [:inventory :content commodityId] (fnil + 0) amount))
 
-(defn agent-has? [agent commodityId amount]
+(defn agent-has?
+  "Return 'true' if the agent has more or equal than 'amount' in its stock
+   for the provided commodity"
+  [agent commodityId amount]
   (<= amount (agent-commodity-amount agent commodityId)))
 
-(defn agent-has-not? [agent commodityId amount]
+(defn agent-has-not?
+  "Return 'true' if the agent has not more or equal than 'amount' in its stock
+   for the provided commodity"
+  [agent commodityId amount]
   (not (agent-has? agent commodityId amount)))
-
 
 (defmulti apply-on-agent (fn [_agent event] (:what event)))
 
@@ -188,10 +203,11 @@
 (defn new-ask [agent commodityId limit]
   (let [bidPrice (price-of agent commodityId)
         quantity (determine-sale-quantity agent commodityId)]
-    {:what     :sell
-     :from     (:id agent)
-     :price    bidPrice
-     :quantity (max quantity limit)}))
+    {:what        :sell
+     :from        (:id agent)
+     :commodityId commodityId
+     :price       bidPrice
+     :quantity    (max quantity limit)}))
 
 (defn determine-purchase-quantity [agent commodityId]
   (let [historicalPrices (historical-prices-of commodityId)
@@ -211,10 +227,11 @@
 (defn new-bid [agent commodityId limit]
   (let [bidPrice (price-of agent commodityId)
         quantity (determine-purchase-quantity agent commodityId)]
-    {:what     :buy
-     :from     (:id agent)
-     :price    bidPrice
-     :quantity (min quantity limit)}))
+    {:what        :buy
+     :from        (:id agent)
+     :commodityId commodityId
+     :price       bidPrice
+     :quantity    (min quantity limit)}))
 
 (defn generate-offer [agent commodityId]
   (let [inventory (inventory-of agent)

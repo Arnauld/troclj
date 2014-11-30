@@ -21,11 +21,11 @@
         clearingHouse (new-clearing-house commodities)
         farmer (samples/new-farmer-agent)
         blacksmith (samples/new-blacksmith-agent)]
-    (println "commodities" commodities)
-    (println "clearingHouse" clearingHouse)
     (with-commodities commodities
                       (with-clearing-house clearingHouse
                                            (perform-production farmer)
                                            (generate-offers farmer)
                                            (perform-production blacksmith)
-                                           (generate-offers blacksmith)))))
+                                           (let [orders (generate-offers blacksmith)]
+                                             (println orders))
+                                           ))))
