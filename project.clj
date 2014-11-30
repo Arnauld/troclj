@@ -17,6 +17,4 @@
                            [org.clojure/tools.logging "0.2.6"]
                            [ch.qos.logback/logback-classic "1.0.13"]]
             :main troclj.web
-            ;:plugins [[lein-ring "0.7.1"]]
-            ;:ring {:handler troclj.web/app}
-            )
+            :plugins [[lein-cloverage "1.0.2"]])

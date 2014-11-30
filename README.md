@@ -9,6 +9,27 @@
                                                  
 An Open-Source Economics Engine in clojure.
 
+## Development
+
+**Launch tests**:
+
+```
+lein test
+```
+
+**Code coverage**: [cloverage](https://github.com/lshift/cloverage)
+
+```
+lein cloverage
+```
+
+**Run application**:
+
+```
+lein main
+```
+
+
 ## License
 
 Copyright © 2014 Arnauld Loyer
@@ -29,3 +50,8 @@ your option) any later version.
 * `D3.js`
   * [D3.js](http://d3js.org/)
   * [Interactive Data Visualization for the Web](http://chimera.labs.oreilly.com/books/1230000000345/ch02.html)
+  
+## Ascii Art
+
+* http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=troclj
+* http://patorjk.com/software/taag/#p=display&f=Ogre&t=commodities
