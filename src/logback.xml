@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="bdi.glue.http.httpclient" level="debug"/>
+    <logger name="bdi.glue.ssh" level="debug"/>
+
+    <logger name="org.eclipse.jetty" level="info"/>
+    <logger name="org.eclipse.jetty.io" level="warn"/>
+    <logger name="org.eclipse.jetty.util" level="warn"/>
+    <logger name="org.eclipse.jetty.server" level="warn"/>
+    <logger name="org.eclipse.jetty.http" level="warn"/>
+
+    <root level="info">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
